@@ -18,11 +18,12 @@ html{
 body{
     font-family: 'Inter', sans-serif;
     width: 100%;
+    background-color: #fafafa;
 }
 
 button{
     font-weight: bold;
-    font-size: 1.1.rem;
+    font-size: 1.1rem;
     cursor: pointer;
     padding: 1rem 2rem;
     border: 3px solid #23d997;
@@ -52,9 +53,7 @@ button{
         font-weight: bold;
     }
 
-    p{
-        padding: .8rem .5rem; 
-    }
+  
 
 `;
 
