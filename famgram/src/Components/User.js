@@ -34,6 +34,7 @@ align-items: center;
 cursor: pointer;
 @media(max-width: 650px){
    justify-content: flex-end;
+   margin-top: 1rem;
  }
 
  .header__avatar{

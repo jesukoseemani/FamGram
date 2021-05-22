@@ -41,6 +41,7 @@ function Skeleton({user, userDetails}) {
         location={post.location}
         userId={post.userId}
         likeData={post.likes}
+        createdAt={post.createdAt}
         
         />
       ))}

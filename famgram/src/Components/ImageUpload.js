@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import styled from "styled-components"
 import { motion } from "framer-motion"
-import firebase from "firebase";
+// import firebase from "firebase";
 import { storage, db } from "../firebase";
 import { v4 as uuidv4 } from "uuid";
 
@@ -27,14 +27,14 @@ function ImageUpload({username, userId}) {
 
   
   const handleChange = (e) => {
-
+ 
     if (e.target.files[0]) {
       if(e.target.files[0].type === "image/jpeg" ||
          e.target.files[0].type === "image/jpg" ||
          e.target.files[0].type === "image/png"
          ){
-          setImage(e.target.files[0]);
-        
+         
+         setImage(e.target.files[0]);
          }
          else{
            e.target.value = ""
@@ -47,7 +47,8 @@ function ImageUpload({username, userId}) {
   };
 
   const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}${uuidv4()}`).put(image);
+    let num = uuidv4();
+    const uploadTask = storage.ref(`images/${num}/${image.name}`).put(image);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -66,12 +67,13 @@ function ImageUpload({username, userId}) {
         
         storage
           .ref("images")
+          .child(num)
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
           
             db.collection("Posts").add({
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              createdAt: new Date().toISOString(),
               caption: caption,
               imageUrl: url,
               location: location,

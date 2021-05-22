@@ -1,16 +1,17 @@
-import React, {useState, useEffect} from 'react'
-import { db } from "../firebase"
-import firebase from "firebase"
-import styled from "styled-components"
-import { motion } from "framer-motion"
-import {useStyles} from "../styles/avatarStyles"
+import React, {useState, useEffect} from 'react';
+import { db } from "../firebase";
+import firebase from "firebase";
+import styled from "styled-components";
+import { motion } from "framer-motion";
+import {useStyles} from "../styles/avatarStyles";
 import Avatar from '@material-ui/core/Avatar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuidv4 } from "uuid";
+import TimeAgo from 'timeago-react';
 
 
-function Post({Pid, username, caption, imageUrl, location, userId, user, likeData}) {
+function Post({Pid, username, caption, imageUrl, location, userId, user, likeData, createdAt}) {
   const classes = useStyles();
   const [like, setLike] = useState(false)
   const [comment, setComment] = useState("")
@@ -143,7 +144,7 @@ function Post({Pid, username, caption, imageUrl, location, userId, user, likeDat
           <p className="post__p" onClick={() => setLength(!length)}>View all {comments.length} comments</p>
           }
           
-        {length === true ? comments.map((comment) => (
+          {length === true ? comments.map((comment) => (
           <p key={comment.id}>
             <strong>{comment.username}: </strong>
             {comment.text}
@@ -157,14 +158,19 @@ function Post({Pid, username, caption, imageUrl, location, userId, user, likeDat
         ))
         }
         </div>
-         
+       
+        <div style={{margin: "0rem 0rem 1rem 2rem",}}>
+        <TimeAgo datetime={createdAt}/>
+        </div>
+        
          { showComment && 
         <form className="form">
         <input value={comment} onChange={(e) => setComment(e.target.value)} type="text" placeholder="Add a comment ..."/>
+
         <input type="submit" disabled={!comment} value="Post" onClick={submitComment}/>
         </form>
          }
-        
+       
        </Footer>
 
     </PostStyle>

@@ -36,6 +36,7 @@ function UserProfile({user}) {
   const id = location.pathname.split("/")[2]
 
   const [userDetails,setUserDetails] = useState()
+  
   useEffect(() => {
     
     if(user){
@@ -140,9 +141,10 @@ function UserProfile({user}) {
 
 useEffect(() => {
   setOpen(false)
+  let num = uuidv4();
 
- if(image){  
-  const uploadTask = storage.ref(`images/${image.name}${uuidv4()}`).put(image);
+  if(image){  
+  const uploadTask = storage.ref(`images/${num}/${image.name}`).put(image);
 
   uploadTask.on(
     "state_changed",
@@ -162,6 +164,7 @@ useEffect(() => {
       
       storage
         .ref("images")
+        .child(num)
         .child(image.name)
         .getDownloadURL()
         .then((url) => {

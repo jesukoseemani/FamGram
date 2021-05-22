@@ -87,7 +87,7 @@ function SignUp() {
       <div style={{color: "red", 
                   textAlign: "center",
                   marginBottom:"1.5rem",
-                  fontSize:"1.5rem",
+                  fontSize:"1rem",
                   fontStyle:"italics"}}> {error}</div>
      
       <div className="form_input">
