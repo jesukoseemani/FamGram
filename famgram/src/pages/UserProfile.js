@@ -9,11 +9,12 @@ import Fade from "@material-ui/core/Fade";
 import Avatar from '@material-ui/core/Avatar';
 import Header from "../Components/Header"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faBell, faCommentDots, faHeart, faUserEdit, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faBell, faUserEdit, faPen } from '@fortawesome/free-solid-svg-icons';
 import { faAngellist } from '@fortawesome/free-brands-svg-icons'
 import { db , storage} from "../firebase"
 import { CubeGrid } from 'better-react-spinkit'
 import { v4 as uuidv4 } from "uuid";
+import PhotoView from "../Components/PhotoView"
 
 
 function UserProfile({user}) {
@@ -21,7 +22,6 @@ function UserProfile({user}) {
   const classes = useStyles();
   const classes1 = useStyles1();
   const classes2 = useStyles2();
-  const [hover, setHover] = useState(false)
   const [text, setText] = useState("")
   const [open, setOpen] = useState(false)
   const [open1, setOpen1] = useState(false)
@@ -173,6 +173,20 @@ useEffect(() => {
             imageUrl: url
           });
          
+         const getPhotoInPost = db.collection("Posts")
+         
+         getPhotoInPost.where("userId", "==" , profile.userId)
+          .get()
+          .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                 getPhotoInPost.doc(doc.id).update({
+                    userImageUrl: url
+                  })
+                 });
+          })
+          .catch((error) => {
+              console.log("Error getting documents: ", error);
+          });
           
         });
     }
@@ -180,7 +194,7 @@ useEffect(() => {
   setImage(null);
   
  }
-  },[image, id])
+  },[image, id, profile.userId])
 
   return (
     <>
@@ -244,32 +258,12 @@ useEffect(() => {
 
       <div className="info-content">
       {content.map(({data, id}) => (
-                  <div key={id} style={{backgroundColor: hover ? "gray" : ""}}  className="hover" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-          
-                  <img src={data.imageUrl} alt={data.username}  />
-                  
-                  <div className="hover_rapper">
-                  {hover && <>
-                    <div className="hover_icon">
-                    <FontAwesomeIcon 
-                 className="icons" 
-                 icon={faHeart} 
-                 size="1x"
-                  />{data.likes.length}
-                    </div>
-                    <div className="hover_icon">
-                    <FontAwesomeIcon 
-                 className="icons" 
-                 icon={faCommentDots} 
-                 style={{marginLeft: "2rem"}}
-                 size="1x"
-                  />{data.comment.length}
-                    </div>
-                    </>
-                    }
-                  </div>
-                 
-                  </div>
+                <PhotoView 
+                key={id}
+                username={data.username}
+                imageUrl={data.imageUrl} 
+                likes={data.likes.length}
+                comment={data.comment.length} />
       ) 
         )}
          
@@ -339,11 +333,7 @@ useEffect(() => {
           </div>
         </Fade>
       </Modal>
-      </StyledProfile>
-      
-      
-      
-    
+      </StyledProfile>    
     </>
   );
 }
@@ -475,43 +465,15 @@ display:grid;
 grid-template-columns: repeat(3, 1fr);
 grid-gap: 1rem;
 margin: 0 1.5rem;
+
 @media(max-width: 850px){
   grid-template-columns: repeat(2, 1fr);
  }
-
-img{
-  width:100%;
-  height: 25rem;
-  object-fit:cover;
+ @media(max-width: 550px){
+  grid-template-columns: 1fr;
+ }
 }
 
-.hover{
-  position:relative;
-  
-  .hover_rapper{
-  position:absolute;
-  top:50%;
-  left: 25%;
-  right: 25%;
-  display: flex;
-  justify-content:space-between;
-  align-items:center;
-  /* width:40%; */
-  margin:0 auto;
-  }
-  .hover_icon{
-  display: flex;
-  justify-content:center;
-  align-items:center;
-  color:white;
-    .icons{
-      color:white;
-      font-size: 2.2rem;
-      padding-right:.3rem;
-    }
-  }
-}
-}
 `
 
 

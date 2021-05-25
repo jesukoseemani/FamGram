@@ -6,7 +6,7 @@ import { storage, db } from "../firebase";
 import { v4 as uuidv4 } from "uuid";
 
 
-function ImageUpload({username, userId}) {
+function ImageUpload({username, userId, userDetails}) {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState("");
@@ -47,6 +47,7 @@ function ImageUpload({username, userId}) {
   };
 
   const handleUpload = () => {
+    console.log(userDetails[0].id)
     let num = uuidv4();
     const uploadTask = storage.ref(`images/${num}/${image.name}`).put(image);
     uploadTask.on(
@@ -80,8 +81,9 @@ function ImageUpload({username, userId}) {
               username: username,
               userId: userId,
               likes:[],
-              comment:[]
-
+              comment:[],
+              userImageUrl: userDetails[0].data.imageUrl,
+              userProfileId: userDetails[0].id
             });
             setProgress(0);
             setCaption("");

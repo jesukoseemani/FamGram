@@ -32,9 +32,10 @@ display: flex;
 justify-content: flex-start;
 align-items: center;
 cursor: pointer;
+
 @media(max-width: 650px){
    justify-content: flex-end;
-   margin-top: 1rem;
+   margin-top: .5rem;
  }
 
  .header__avatar{

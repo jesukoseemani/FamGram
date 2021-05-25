@@ -9,16 +9,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuidv4 } from "uuid";
 import TimeAgo from 'timeago-react';
+import { useHistory } from 'react-router-dom';
+import "./Post.css"
 
 
-function Post({Pid, username, caption, imageUrl, location, userId, user, likeData, createdAt}) {
+function Post({Pid, username, caption, imageUrl, location, userId, user, likeData, createdAt, userImageUrl, userProfileId}) {
   const classes = useStyles();
   const [like, setLike] = useState(false)
   const [comment, setComment] = useState("")
   const [comments, setComments] = useState([])
   const [length, setLength] = useState(false)
   const [showComment, setShowComment] = useState(false)
+  const history = useHistory()
+  
+  const toProfile = () => {
 
+    history.push(`/p/${userProfileId}`)
+  
+  }
 
   useEffect(() => {
     
@@ -42,15 +50,10 @@ function Post({Pid, username, caption, imageUrl, location, userId, user, likeDat
     if(user){
     likeData.map((id) => id === user.uid ? setLike(true) : setLike(false))
     }
-    // {
-    //   if(id === user.uid){
-    //    setLike(true)
-    //   }else{
-    //     setLike(false)
-    //   }
-    // })
 
   }, [user, likeData])
+
+  
   
   const clickHandler = () => {
    setLike(!like)
@@ -89,9 +92,9 @@ function Post({Pid, username, caption, imageUrl, location, userId, user, likeDat
 
     <PostStyle>
        
-       <Header>
+       <Header style={{cursor: "pointer"}} onClick={toProfile}>
          <div className="header__avatar">
-         <Avatar alt={username} src="/static/images/avatar/1.jpg"/>
+         <Avatar alt={username} src={userImageUrl}/>
          </div>
           <div className="header__info">
             <h5>{username}</h5>
@@ -99,9 +102,16 @@ function Post({Pid, username, caption, imageUrl, location, userId, user, likeDat
           </div>      
        </Header>
        
-       <Picture>
+       <div className="picture" onDoubleClick={clickHandler}>
         <img src={imageUrl} alt="postImage"/>
-       </Picture>
+        <FontAwesomeIcon 
+         className="iconBig"
+         icon={faHeart} 
+         size="10x"
+         style={{opacity: like ? "1" : "0",
+                 animation: like ? "2s likeAnimation ease-in-out forwards" : "" }}
+          />
+       </div>
        
        <Footer>
          <div className="footer__icons">
@@ -130,7 +140,7 @@ function Post({Pid, username, caption, imageUrl, location, userId, user, likeDat
          </div>
           {caption && <div className="footer__caption">
           <div className="footer__caption-top">
-          <Avatar alt={username} src="/static/images/avatar/1.jpg" className={classes.small} />
+          <Avatar alt={username} src={userImageUrl} className={classes.small} />
           <p> {username} </p>
           </div>
           <div className="footer__caption-bottom">
@@ -217,14 +227,26 @@ border-bottom: 1px solid lightgray;
    }
  }
 `
-const Picture = styled(motion.div)`
-width: 100%;
+// const Picture = styled(motion.div)`
+// width: 100%;
+// position:relative;
+// display: flex;
+// align-items: center;
+// justify-content: center;
+// flex-direction: column;
+// img{
+//  width:100%;
+//  object-fit: contain;
+//  cursor: pointer;
+// }
+// .iconBig{
+//   position: absolute;
+//   display: inline-block;
+//   opacity: 0;
+//   color: red;
+// }
 
-img{
- width:100%;
- object-fit: contain;
-}
-`
+// `
 const Footer = styled(motion.div)`
 display: flex;
 justify-content: center;
@@ -348,5 +370,32 @@ input[type = submit]{
     }
   }
 `
+
+// const Anim = keyframes`
+//   0%
+//   {
+//     transform: scale( .75 );
+//   }
+//   20%
+//   {
+//     transform: scale( 1.1 );
+//   }
+//   40%
+//   {
+//     transform: scale( .75 );
+//   }
+//   60%
+//   {
+//     transform: scale( 1.1 );
+//   }
+//   80%
+//   {
+//     transform: scale( .75 );
+//   }
+//   100%
+//   {
+//     transform: scale( .75 );
+//   }
+// `
 
 export default Post

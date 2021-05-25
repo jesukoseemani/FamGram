@@ -9,6 +9,7 @@ import { db } from "../firebase"
 function Skeleton({user, userDetails}) {
   const [posts, setPosts] = useState([])
 
+
   useEffect(() => {
   db.collection('Posts')
   .orderBy('createdAt', 'desc')
@@ -29,7 +30,7 @@ function Skeleton({user, userDetails}) {
       
         <Rapper>
       <StyledPost>
-      <ImageUpload username={user?.displayName} userId={user?.uid}/>
+      <ImageUpload username={user?.displayName} userId={user?.uid}userDetails={userDetails}/>
       {posts.map(({id, post}) => (
         <Post 
         key={id} 
@@ -42,7 +43,8 @@ function Skeleton({user, userDetails}) {
         userId={post.userId}
         likeData={post.likes}
         createdAt={post.createdAt}
-        
+        userImageUrl={post.userImageUrl}
+        userProfileId={post.userProfileId}
         />
       ))}
 
