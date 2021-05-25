@@ -16,7 +16,6 @@ import "./Post.css"
 function Post({Pid, username, caption, imageUrl, location, userId, user, likeData, createdAt, userImageUrl, userProfileId}) {
   const classes = useStyles();
   const [like, setLike] = useState(false)
-  const [Dlike, setDlike] = useState(false)
   const [comment, setComment] = useState("")
   const [comments, setComments] = useState([])
   const [length, setLength] = useState(false)
@@ -58,7 +57,7 @@ function Post({Pid, username, caption, imageUrl, location, userId, user, likeDat
   
   const clickHandler = () => {
    setLike(!like)
-   setDlike(!Dlike)
+   
    if(like !== true){
     db.collection('Posts').doc(Pid)
     .update({
@@ -110,8 +109,8 @@ function Post({Pid, username, caption, imageUrl, location, userId, user, likeDat
          className="iconBig"
          icon={faHeart} 
          size="10x"
-         style={{opacity: Dlike ? "1" : "0",
-                 animation: Dlike ? "2s likeAnimation ease-in-out forwards" : "" }}
+         style={{opacity: like ? "1" : "0",
+                 animation: like ? "2s likeAnimation ease-in-out forwards" : "" }}
           />
        </div>
        
