@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styled from "styled-components"
 import { motion } from "framer-motion"
 import {useLocation} from "react-router-dom"
@@ -29,7 +29,7 @@ function UserProfile({user}) {
   const [profile, setProfile] = useState([])
   const [content, setContent] = useState([])
   const [progress, setProgress] = useState(0)
-
+  const ref = useRef(null)
 
 
   const location = useLocation()
@@ -61,7 +61,11 @@ function UserProfile({user}) {
     if(id){
       db.collection("Users").doc(id)
       .onSnapshot((doc) => {
-        setProfile(doc.data()) 
+        setProfile({
+        id: doc.id,
+        ...doc.data()
+        }) 
+
       })
     }
   
@@ -202,8 +206,10 @@ useEffect(() => {
       <Header userDetails={userDetails} />
       {/* </Sty> */}
       <StyledProfile>
+      {userDetails && (
         <ProfileHeader>
-        <div style={{position: "relative"}} className="profile_avatar" onClick={handleOpen}>
+        
+        <div style={{position: "relative"}} className="profile_avatar" onClick={userDetails[0]?.id === profile?.id ? handleOpen : null}>
        
         <Avatar  alt={profile.username} src={profile.imageUrl} className={classes.largest} />
         {progress > 0 && progress <= 99 ? 
@@ -216,7 +222,7 @@ useEffect(() => {
          icon={faUserEdit} 
          style={{marginTop: "-10rem", color: "#3B74AD"}}
          size="2x" />
-        </div>
+        </div> 
 
         <div className="profile_content">
           <div className="name">
@@ -240,11 +246,13 @@ useEffect(() => {
          icon={faPen} 
          style={{paddingLeft: "1rem", color: "black", cursor: "pointer"}
         }
-        onClick={handleOpen1}
+        onClick={userDetails[0]?.id === profile?.id ? handleOpen1 : null}
          size="2x" />
         </p>
         </div>
+        
         </ProfileHeader>
+        )}
         <div className="line"></div>
         <ProfileInfo>
         <div className="info-head">
@@ -289,9 +297,9 @@ useEffect(() => {
             
             <p style={{color: "#3B74AD", cursor:"pointer"}} className={classes1.layout} id="transition-modal-description"
             >
-              <label style={{cursor:"pointer"}} htmlFor="file">Upload Photo</label>
+              <label style={{cursor:"pointer"}} onClick={() => ref.current.click()} >Upload Photo</label>
               <input type="file" name="file" id="file" accept="image/png,image/jpg,image/jpeg" 
-               onChange={handleChange} hidden/>
+               onChange={handleChange} ref={ref} hidden/>
             </p>
             
             <p style={{color: "red", cursor:"pointer"}} className={classes1.layout} id="transition-modal-description"

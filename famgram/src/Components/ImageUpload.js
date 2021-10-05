@@ -13,6 +13,7 @@ function ImageUpload({username, userId, userDetails}) {
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
   const [error1, setError1] = useState("");
+  const [active, setActive] = useState(false)
 
   const ref = useRef(null)
 
@@ -48,6 +49,7 @@ function ImageUpload({username, userId, userDetails}) {
 
   const handleUpload = () => {
     console.log(userDetails[0].id)
+    setActive(true)
     let num = uuidv4();
     const uploadTask = storage.ref(`images/${num}/${image.name}`).put(image);
     uploadTask.on(
@@ -90,7 +92,7 @@ function ImageUpload({username, userId, userDetails}) {
             setImage(null);
             setLocation("");
             ref.current.value = "";
-            
+            setActive(false)
           });
       }
     );
@@ -125,7 +127,7 @@ function ImageUpload({username, userId, userDetails}) {
                   fontSize:"1.1rem",
                   fontStyle:"italics"}}> {error1}</div>
       
-      <input disabled={!image} type="button" value="Upload" className="button" onClick={handleUpload} />
+      <input disabled={!image || active} type="button" value="Upload" className="button" onClick={handleUpload} />
 
     </StyledImageUpload>
   )

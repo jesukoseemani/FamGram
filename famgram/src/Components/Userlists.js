@@ -39,7 +39,7 @@ function Userlists({user, userDetails}) {
    
  
   return (
-    <StyledUserlist>
+    <StyledUserlist >
       {userDetails &&
        
        <Header onClick={profileHandler}>
@@ -76,22 +76,21 @@ function Userlists({user, userDetails}) {
 }
 
 const StyledUserlist = styled(motion.div)`
+
 .customParagraph{
-  @media(max-width: 650px){
+  @media(max-width: 950px){
    font-size:.9rem;
  } 
 }
-@media(max-width: 650px){
-   width:6rem;
- } 
+
 `
 const Header = styled(motion.div)`
 display: flex;
 justify-content: flex-start;
 align-items: center;
 
-@media(max-width: 650px){
-   justify-content: flex-end;
+@media(max-width: 950px){
+   justify-content: center;
  }
 
  .header__avatar{
@@ -107,7 +106,7 @@ align-items: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
   cursor: pointer;
-  @media(max-width: 650px){
+  @media(max-width: 950px){
     display: none;
  }  
    h5{
@@ -126,7 +125,7 @@ margin-top: 2.5rem;
 h3{
 display: none;
 
-@media(max-width: 650px){
+@media(max-width: 950px){
    /* font-size: 1.2rem; */
    margin: .8rem;
    display: flex;
@@ -138,7 +137,7 @@ display: none;
 h2{
   margin: .8rem;
   
-  @media(max-width: 650px){
+  @media(max-width: 950px){
    font-size: 1.2rem;
    display: none;
  }

@@ -32,8 +32,9 @@ display: flex;
 justify-content: flex-start;
 align-items: center;
 cursor: pointer;
+margin:.6rem;
 
-@media(max-width: 650px){
+@media(max-width: 950px){
    justify-content: flex-end;
    margin-top: .5rem;
  }
@@ -51,7 +52,7 @@ cursor: pointer;
   margin-left: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  @media(max-width: 650px){
+  @media(max-width: 950px){
     display: none;
  }  
   

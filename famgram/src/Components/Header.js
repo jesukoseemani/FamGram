@@ -2,13 +2,13 @@ import React from 'react'
 import styled from "styled-components"
 import { motion } from "framer-motion"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faSignOutAlt, faEllipsisV, faTimes} from '@fortawesome/free-solid-svg-icons';
 import Avatar from "@material-ui/core/Avatar";
 import logo from "../img/famgram.svg";
 import { auth } from "../firebase"
 import {useHistory} from "react-router-dom"
 
-function Header({userDetails}) {
+function Header({userDetails, openUL, run}) {
  const history = useHistory()
  const history1 = useHistory()
  const history2 = useHistory()
@@ -33,12 +33,12 @@ function Header({userDetails}) {
     
     <Rapper>
     <Logo>
-      <img src={logo} alt="logo"/>
+      <img onClick={GotoHome} src={logo} alt="logo"/>
     </Logo>
     
     <StyledIcons>
     <FontAwesomeIcon className="icons" icon={faHome} size="2x" aria-hidden="true" title="Home" onClick={GotoHome}/>
-    <FontAwesomeIcon className="icons" icon={faSignOutAlt} size="2x" aria-hidden="true" title="SignOut" onClick= {signUserOut} />
+    <FontAwesomeIcon className="icony" icon={faSignOutAlt} size="2x" aria-hidden="true" title="SignOut" onClick= {signUserOut} />
     {userDetails && 
     <Avatar
           className="post__avatar"
@@ -47,6 +47,9 @@ function Header({userDetails}) {
           onClick={clickProfile}        
         />
     }
+    <FontAwesomeIcon style={{visibility: openUL === true ? "hidden" : ""}} className="open" icon={faEllipsisV} size="2x" aria-hidden="true" title="open" onClick={() => run()}/>
+
+    <FontAwesomeIcon style={{display: openUL !== true ? "none" : ""}}  className="close" icon={faTimes} size="2x" aria-hidden="true" title="close" onClick={() => run()}/>
     </StyledIcons>
    
     </Rapper>
@@ -100,9 +103,38 @@ const StyledIcons = styled(motion.div)`
  justify-content: center;
  align-items: center;
  /* flex-basis: 20%; */
+ .close{
+   color: red;
+   display: none;
+   margin-left:3rem;
+   @media(max-width: 950px){
+     display: flex;
+     font-size:2.3rem;
+     margin-left:2.5rem;
+ }
+ }
+
+ .open{
+   display: none;
+   @media(max-width: 950px){
+     display: flex;
+     font-size:1.8rem;
+     margin-left:2.5rem;
+ }
+ }
+ 
+ .icony{
+  margin-left:3rem;
+  @media(max-width: 950px){
+     margin-left:1rem;
+ }
+ }
  .icons{
    margin-left:3rem;
    cursor: pointer;
+   @media(max-width: 950px){
+     display: none;
+ }
    @media(max-width: 600px){
     font-size:1.8rem;
     margin-left:1.5rem;
@@ -111,6 +143,9 @@ const StyledIcons = styled(motion.div)`
  .post__avatar{
   margin-left:3rem;
   cursor: pointer;
+  @media(max-width: 950px){
+     display: none;
+ }
  }
 `
 

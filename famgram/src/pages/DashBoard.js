@@ -22,10 +22,14 @@ function DashBoard({user}) {
     // userImage={userDetails.data.imageUrl} userDetails={userDetails}
    
   },[user])
+
+  const [openUL, setOpenUL] = useState(null)
+
+  const run = () =>  setOpenUL(value => !value); 
   return (
     <>
-      <Header userDetails={userDetails} />
-      <Skeleton user={user} userDetails={userDetails}/>
+      <Header userDetails={userDetails} openUL={openUL} run={run} setOpenUL={setOpenUL} />
+      <Skeleton user={user} userDetails={userDetails} openUL={openUL}/>
     </>
     
   )

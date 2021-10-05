@@ -198,6 +198,9 @@ background-color: white;
   border: 1px solid lightgray;
   margin-bottom: 2.5rem;
   color: gray;
+  @media(max-width:950px){
+    max-width:60rem;
+  }
 
 `
 const Header = styled(motion.div)`
@@ -261,56 +264,46 @@ align-items: center;
 margin-top: 1rem;
   .icons{
    margin-left: 2rem;
-   font-size: 2.7rem;
+   font-size: 2.5rem;
    color: white;
    stroke: gray;
    stroke-width: 3rem;
    cursor: pointer;
-   @media(max-width: 650px){
-    font-size: 2rem;
-    margin-left: .8rem;
- }
+  
   }
 }
 
 .footer__like{
  margin-left: 2rem;
  margin-top:1rem;
- @media(max-width: 650px){
-    margin-left: .8rem;
- }
+ 
  .like-number{
   color: black;
  }
   p{
-   font-size: 1.65rem;
-   @media(max-width: 650px){
-    font-size: 1.3rem;
- }
+   font-size: 1.3rem;
+  
   }
 }
 
 .footer__caption{
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin-left: 2rem;
   margin-top: 1rem;
-  @media(max-width: 650px){
-    margin-left: .8rem;
- }
+  width:90%;
+ 
   .footer__caption-top{
     display: flex;
     justify-content: center;
     align-items: center;
     p{
     margin-left: .1rem;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: black;
-    @media(max-width: 650px){
-    font-size: .8rem;
- }
+  
     }
   }
 
@@ -318,12 +311,11 @@ margin-top: 1rem;
    margin-left: 1.2rem;
    display:flex;
    justify-content: center;
-    align-items: center;
+   align-items: center;
    color: black;
-   font-size: 1.2rem;
-   @media(max-width: 650px){
-    font-size: .8rem;
- }
+   font-size: 1.3rem;
+   
+  
   }
 
  
@@ -333,15 +325,12 @@ margin-top: 1rem;
   margin-top: .5rem;
   margin-bottom: 1rem;
   color: black;
-  @media(max-width: 650px){
-    margin-left: .8rem;
- }
+  width: 90%;
+ 
   p{
     padding-top:.5rem;
-    font-size:1.1rem;
-    @media(max-width: 650px){
-    font-size: .8rem;
- }
+    font-size:1.24rem;
+   
   }
   .post__p{
     color: #3b74ad
@@ -372,7 +361,7 @@ input[type = submit]{
   }
 `
 
-// const Anim = keyframes`
+// const Anim = 
 //   0%
 //   {
 //     transform: scale( .75 );
